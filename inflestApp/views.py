@@ -9,48 +9,50 @@ def analysis_view(request):
     if request.method == 'POST':
         form = DataForm(request.POST)
         if form.is_valid():
-            data = form.cleaned_data
-            # import_data("./file2.xlsx")
-            new_data = MacroeconomicData.objects.create(
-                inflation_rate=form.cleaned_data["inflation_rate"],
-                interest_rate=form.cleaned_data["interest_rate"],
-                exchange_rate=form.cleaned_data["exchange_rate"],
-                real_gdp=form.cleaned_data["real_gdp"],
-                fdi=form.cleaned_data["fdi"],
-                fiscal_expenditure=form.cleaned_data["fiscal_expenditure"],
-                year=form.cleaned_data["year"],
-                growth_rate=form.cleaned_data["growth_rate"]
+            input_data = form.cleaned_data
 
-            )
-            new_data.save()
-            print("sAVED")
+            # Convert input data to DataFrame
+            input_d = pd.DataFrame([input_data])
+            input_df = input_d.drop(columns=['year'])
 
+            # Get historical data from the database
             queryset = MacroeconomicData.objects.all()
-            df = pd.DataFrame(list(queryset.values()))
-            df2 = []
-            values = list(queryset.values())
-            for data in values:
-                del data["country"]
-                del data["id"]
-                df2.append(data)
-            df3 = pd.DataFrame(df2)
-            print(df3)
-            # trained_model_path =  train_varmax_model(df3)
-            trained_model_path = 'varmax_model.pkl'
-            print("----------------------------------")
-            dta = pd.DataFrame([data])
-            print(dta)
-            forecast = forecast_varmax_model(trained_model_path, dta)
-            print(forecast)
-            return render(request, 'result.html',
-                          {'forecast': forecast,}
-                        #    'inflation_rate': forecast[0][0],
-                        #    'interest_rate': forecast[0][1],
-                        #    'exchange_rate':forecast[0][2],
-                        #    'real_gdp':forecast[0][3],
-                        #    'fdi': forecast[0][4],
-                        #    'fiscal_expenditure': forecast[0][5]}
-                           )
+            historical_data = pd.DataFrame(list(queryset.values()))
+
+            # Drop unnecessary columns
+            historical_data = historical_data.drop(columns=['country', 'id', 'year'])
+
+            # Combine historical data with input data for forecasting
+            combined_data = pd.concat([historical_data, input_df], ignore_index=True)
+            print("----------------+++++++++++11111111111111--------------")
+            print(combined_data)
+
+            # Train the model with combined data
+            try:
+                trained_model_path = train_varmax_model(combined_data)
+
+                if trained_model_path:
+                    # Forecast with the new input data
+                    forecast = forecast_varmax_model(trained_model_path, input_df)
+                    forecast_values = forecast.iloc[0].tolist()
+
+                    print(forecast_values)
+
+                    return render(request, 'result.html',
+                                  {
+                                   'inflation_rate': forecast_values[0],
+                                   'interest_rate': forecast_values[1],
+                                   'exchange_rate': forecast_values[2],
+                                   'real_gdp': forecast_values[3],
+                                   'fdi': forecast_values[4],
+                                   'fiscal_expenditure': forecast_values[5],
+                                   'growth_rate': forecast_values[6],
+                                   }
+                                  )
+                else:
+                    return render(request, 'input.html', {'form': form, 'error': 'Model training failed. Please check your data.'})
+            except ValueError as e:
+                return render(request, 'input.html', {'form': form, 'error': str(e)})
     else:
         form = DataForm()
     return render(request, 'input.html', {'form': form})

@@ -1,6 +1,9 @@
 # File: inflestApp/analysis/analysis.py
 
 import pandas as pd
+from sklearn.preprocessing import StandardScaler
+import warnings
+import numpy as np
 import joblib
 from statsmodels.tsa.api import VAR
 from sklearn.model_selection import train_test_split
@@ -45,20 +48,43 @@ def prepare_data(data):
 from scipy.linalg import LinAlgError
 
 # Function to train VARMAX model
-def train_varmax_model(data):
-    # try:
-    model = VARMAX(data, order=(1, 1))  # Adjust order as needed
-    results = model.fit(maxiter=100, disp=False)  # Adjust maxiter and other parameters
-    model_path = 'varmax_model.pkl'
-    with open(model_path, 'wb') as file:
-        pickle.dump(results, file)
-    return model_path
-    # except Exception as e:
-    #     print(f"Error during model training: {e}")
-    #     return None
-    # except Exception as e:
-    #     print(f"Error during model training: {e}")
-    #     return None
+def train_varmax_model(df):
+    # Ensure there is enough data
+    if df.shape[0] < 2:
+        raise ValueError("Insufficient data for training the VARMAX model")
+
+    # Check for stationarity and apply differencing if necessary
+    df_diff = df.diff().dropna()
+
+    if df_diff.empty:
+        raise ValueError("Differencing resulted in an empty DataFrame. Insufficient data after differencing.")
+
+    # Standardize the data
+    scaler = StandardScaler()
+    df_scaled = pd.DataFrame(scaler.fit_transform(df_diff), columns=df_diff.columns)
+
+    # Create the VARMAX model
+    model = VARMAX(df_scaled, order=(1, 1))
+
+    try:
+        # Fit the model
+        results = model.fit(maxiter=100, disp=False)
+        model_path = 'varmax_model.pkl'
+        
+        # Save the model
+        with open(model_path, 'wb') as file:
+            pickle.dump(results, file)
+        
+        return model_path
+    
+    except np.linalg.LinAlgError as e:
+        print("Error during model training: ", e)
+        return None
+    
+    except Exception as e:
+        print("Unexpected error during model training: ", e)
+        return None
+
 
 
 # Function to forecast using VARMAX model
