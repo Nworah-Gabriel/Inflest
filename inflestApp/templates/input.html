@@ -9,7 +9,7 @@
       rel="stylesheet"
     />
     <style>
-      body {
+      .body2 {
         font-family: "Roboto", sans-serif;
         background-color: #f0f0f5;
         color: #333;
@@ -45,6 +45,10 @@
         border: 1px solid #ddd;
         border-radius: 4px;
       }
+      body {
+        margin: 0px;
+        padding-top: 0px;
+      }
       .btn {
         width: 100%;
         background-color: #0056b3;
@@ -65,15 +69,34 @@
     </style>
   </head>
   <body>
-    <div class="container">
-      <h1>Macroeconomic Data Input</h1>
-      <form method="post">
-        {% csrf_token %} {{ form.as_p }}
-        <button type="submit" class="btn">Submit</button>
-        {% if error %}
-        <p class="error">{{ error }}</p>
-        {% endif %}
-      </form>
+    <div
+      style="
+        width: 100%;
+        height: 50px;
+        background-color: #003a75;
+        margin-top: 0px;
+        padding-left: 10px;
+        border-radius: 0px;
+
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+      "
+      class="container"
+    >
+      <h1 style="color: white">Inflest</h1>
+    </div>
+    <div class="body2">
+      <div class="container">
+        <h1>Macroeconomic Data Input</h1>
+        <form method="post">
+          {% csrf_token %} {{ form.as_p }}
+          <button type="submit" class="btn">Submit</button>
+          {% if error %}
+          <p class="error">{{ error }}</p>
+          {% endif %}
+        </form>
+      </div>
     </div>
   </body>
 </html>

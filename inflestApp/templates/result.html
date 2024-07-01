@@ -9,7 +9,7 @@
       rel="stylesheet"
     />
     <style>
-      body {
+      /* body {
         font-family: "Roboto", sans-serif;
         background-color: #f0f0f5;
         color: #333;
@@ -18,13 +18,14 @@
         align-items: center;
         height: 100vh;
         margin: 0;
-      }
+      } */
       .container {
         background-color: #fff;
         border-radius: 8px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         width: 500px;
         padding: 20px;
+        margin-right: 10px;
       }
       h1 {
         text-align: center;
@@ -60,40 +61,72 @@
       .btn:hover {
         background-color: #003a75;
       }
+      .body2 {
+        font-family: "Roboto", sans-serif;
+        background-color: #f0f0f5;
+        color: #333;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+      }
+      body {
+        margin: 0px;
+        padding-top: 0px;
+      }
     </style>
   </head>
   <body>
-    <div class="container">
-      <h1>Forecast Results</h1>
-      <div class="result-group">
-        <label>Inflation Rate:</label>
-        <span class="value">{{ inflation_rate }}</span>
+    <div
+      style="
+        width: 100%;
+        height: 50px;
+        background-color: #003a75;
+        margin-top: 0px;
+        padding-left: 10px;
+        border-radius: 0px;
+
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+      "
+      class="container"
+    >
+      <h1 style="color: white">Inflest</h1>
+    </div>
+    <div class="body2">
+      <div class="container">
+        <h1>Forecast Results</h1>
+        <div class="result-group">
+          <label>Inflation Rate:</label>
+          <span class="value">{{ inflation_rate }}</span>
+        </div>
+        <div class="result-group">
+          <label>Interest Rate:</label>
+          <span class="value">{{ interest_rate }}</span>
+        </div>
+        <div class="result-group">
+          <label>Exchange Rate:</label>
+          <span class="value">{{ exchange_rate }}</span>
+        </div>
+        <div class="result-group">
+          <label>Real GDP:</label>
+          <span class="value">{{ real_gdp }}</span>
+        </div>
+        <div class="result-group">
+          <label>FDI growth rate:</label>
+          <span class="value">{{ fdi }}</span>
+        </div>
+        <div class="result-group">
+          <label>Fiscal Expenditure Growth Rate:</label>
+          <span class="value">{{ fiscal_expenditure }}</span>
+        </div>
+        <div class="result-group">
+          <label>Broad money growth rate:</label>
+          <span class="value">{{ growth_rate }}</span>
+        </div>
       </div>
-      <div class="result-group">
-        <label>Interest Rate:</label>
-        <span class="value">{{ interest_rate }}</span>
-      </div>
-      <div class="result-group">
-        <label>Exchange Rate:</label>
-        <span class="value">{{ exchange_rate }}</span>
-      </div>
-      <div class="result-group">
-        <label>Real GDP:</label>
-        <span class="value">{{ real_gdp }}</span>
-      </div>
-      <div class="result-group">
-        <label>FDI:</label>
-        <span class="value">{{ fdi }}</span>
-      </div>
-      <div class="result-group">
-        <label>Fiscal Expenditure:</label>
-        <span class="value">{{ fiscal_expenditure }}</span>
-      </div>
-      <div class="result-group">
-        <label>Growth Rate:</label>
-        <span class="value">{{ growth_rate }}</span>
-      </div>
-      <a href="analysis3/" class="btn">Go Back</a>
     </div>
   </body>
 </html>
