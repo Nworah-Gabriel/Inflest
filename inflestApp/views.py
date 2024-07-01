@@ -24,7 +24,7 @@ def analysis_view(request):
 
             # Combine historical data with input data for forecasting
             combined_data = pd.concat([historical_data, input_df], ignore_index=True)
-            print("----------------+++++++++++11111111111111--------------")
+           
             print(combined_data)
 
             # Train the model with combined data
@@ -33,7 +33,7 @@ def analysis_view(request):
 
                 if trained_model_path:
                     # Forecast with the new input data
-                    forecast = forecast_varmax_model(trained_model_path, input_df)
+                    forecast = forecast_varmax_model('varmax_model.pkl', input_df)
                     forecast_values = forecast.iloc[0].tolist()
 
                     print(forecast_values)
