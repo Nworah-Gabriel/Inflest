@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>VAR Analysis Results</title>
+  </head>
+  <body>
+    <h1>VAR Analysis Results</h1>
+    {% if analysis_results %}
+    <pre>{{ analysis_results }}</pre>
+    {% else %}
+    <p>No analysis results available.</p>
+    {% endif %}
+  </body>
+</html>

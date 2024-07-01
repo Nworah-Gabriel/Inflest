@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Macroeconomic Data Dashboard</h1>
+    <table>
+      <tr>
+        <th>Country</th>
+        <th>Year</th>
+        <th>Interest Rate</th>
+        <th>Exchange Rate</th>
+        <th>Real GDP</th>
+        <!-- Add other columns as needed -->
+      </tr>
+      {% for entry in data %}
+      <tr>
+        <td>{{ entry.country }}</td>
+        <td>{{ entry.year }}</td>
+        <td>{{ entry.interest_rate }}</td>
+        <td>{{ entry.exchange_rate }}</td>
+        <td>{{ entry.real_gdp }}</td>
+        <!-- Add other data fields as needed -->
+      </tr>
+      {% endfor %}
+    </table>
+  </body>
+</html>

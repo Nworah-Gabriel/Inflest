@@ -1,0 +1,17 @@
+asgiref==3.7.2
+beautifulsoup4==4.12.3
+certifi==2020.12.5
+charset-normalizer==3.3.2
+Django==4.2.9
+django-filter==23.5
+djangorestframework==3.14.0
+docopt==0.6.2
+drf-yasg==1.21.7
+#GDAL==3.4.3 pipwin
+gunicorn
+whitenoise
+openpyxl
+statsmodels
+pandas
+numpy
+scikit-learn
