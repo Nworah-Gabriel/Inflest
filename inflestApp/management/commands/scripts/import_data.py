@@ -17,10 +17,10 @@ def import_data(file_path):
             interest_rate=row['INTEREST RATE'],
             exchange_rate=row['EXR (US$)'],
             real_gdp=row['RGDP GROWTH RATE (%)'],
-            growth_rate=row['BROADER MONEY (GROWTH RATE %)'],
-            fdi=row['FDI Growth Rate (%)'],
+            broad_money_growth_rate=row['BROADER MONEY (GROWTH RATE %)'],
+            fdi_growth_rate=row['FDI Growth Rate (%)'],
             inflation_rate=row['INF (END-YEAR)'],
-            fiscal_expenditure=row['Fiscal Expenditure Growth Rate (%)']
+            fiscal_expenditure_growth_rate=row['Fiscal Expenditure Growth Rate (%)']
         )
         data.save()
         print("Saved:", data)  # Add this line

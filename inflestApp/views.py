@@ -13,8 +13,9 @@ def analysis_view(request):
 
             # Convert input data to DataFrame
             input_d = pd.DataFrame([input_data])
-            input_df = input_d.drop(columns=['year'])
-
+            input_df = input_d.drop(columns=['year','country', 'development_index', 'trilemma'])
+            print("-----------------------------------------")
+            print(input_df)
             # Get historical data from the database
             queryset = MacroeconomicData.objects.all()
             historical_data = pd.DataFrame(list(queryset.values()))
