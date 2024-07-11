@@ -39,9 +39,19 @@ def analysis_view(request):
 
                     print(forecast_values)
 
+                    ie = forecast_values[0]
+                    target_rate = forecast_values[1]
+                    neutral_rate = input_data['interest_rate']
+                    GDPt = input_data['real_gdp']
+                    GDPe = forecast_values[3]
+
+                    it = ie - 2 * (target_rate - neutral_rate - (0.5 * (GDPe - GDPt)))
+
+                    print("value: " + str(it))
+
                     return render(request, 'result.html',
                                   {
-                                   'inflation_rate': forecast_values[0],
+                                   'inflation_rate': it,
                                    'interest_rate': forecast_values[1],
                                    'exchange_rate': forecast_values[2],
                                    'real_gdp': forecast_values[3],
